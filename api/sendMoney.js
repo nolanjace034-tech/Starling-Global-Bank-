@@ -1,0 +1,25 @@
+const { readUsers, writeUsers } = require('./_db');
+module.exports = (req, res) => {
+  if (req.method !== 'POST') return res.status(405).json({message:'Method not allowed'});
+  const { fromEmail, toEmail, amount, note } = req.body;
+  const users = readUsers();
+  const sender = users.find(u=>u.email===fromEmail);
+  const receiver = users.find(u=>u.email===toEmail);
+  if (!sender || !receiver) return res.status(400).json({message:'User not found'});
+  const a = Number(amount);
+  if (isNaN(a) || a <= 0) return res.status(400).json({message:'Invalid amount'});
+  if (sender.balance < a) return res.status(400).json({message:'Insufficient funds'});
+  sender.balance -= a;
+  receiver.balance += a;
+  const txId = 'tx_' + Date.now();
+  const tx = { id: txId, from: sender.email, to: receiver.email, amount: a, note: note||'', date: new Date().toISOString() };
+  sender.transactions = sender.transactions || [];
+  receiver.transactions = receiver.transactions || [];
+  sender.transactions.unshift(Object.assign({}, tx, { type: 'sent' }));
+  receiver.transactions.unshift(Object.assign({}, tx, { type: 'received' }));
+  const alert = { id: 'n_' + Date.now(), message: `₦${a} received from ${sender.name}`, date: new Date().toISOString(), txId };
+  receiver.alerts = receiver.alerts || [];
+  receiver.alerts.unshift(alert);
+  writeUsers(users);
+  return res.json({ ok:true, tx, alert });
+};

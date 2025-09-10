@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Bank A User",
+    "email": "a@bank.com",
+    "password": "123456",
+    "balance": 50000,
+    "transactions": [],
+    "alerts": []
+  },
+  {
+    "id": 2,
+    "name": "Bank B User",
+    "email": "b@bank.com",
+    "password": "123456",
+    "balance": 25000,
+    "transactions": [],
+    "alerts": []
+  },
+  {
+    "id": 999,
+    "name": "Admin",
+    "email": "admin@bank.com",
+    "password": "admin123",
+    "isAdmin": true
+  }
+]
