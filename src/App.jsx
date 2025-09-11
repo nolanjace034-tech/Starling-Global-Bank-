@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import AdminLogin from './pages/AdminLogin.jsx'
-import AdminPanel from './pages/AdminPanel.jsx'
+import Login from './Pages/Login.jsx'
+import Signup from './Pages/Signup.jsx'
+import Dashboard from './Pages/Dashboard.jsx'
+import AdminLogin from './Pages/AdminLogin.jsx'
+import AdminPanel from './Pages/AdminPanel.jsx'
 
 export default function App(){
   const [user, setUser] = useState(null)
